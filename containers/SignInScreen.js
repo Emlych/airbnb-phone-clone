@@ -19,7 +19,7 @@ const SignInScreen = ({ navigation, setToken }) => {
   const [isValid, setIsValid] = useState(true);
   const [isSecure, setIsSecure] = useState(true);
 
-  const ApiUrl = "https://express-airbnb-api.herokuapp.com/";
+  const ApiUrl = "https://express-airbnb-api.herokuapp.com";
   return (
     <KeyboardAwareScrollView>
       {isLoading ? (
@@ -32,14 +32,14 @@ const SignInScreen = ({ navigation, setToken }) => {
           <View style={styles.form}>
             <TextInput
               style={styles.input}
-              onChange={(email) => setEmail(email)}
+              onChangeText={(text) => setEmail(text)}
               value={email}
               placeholder="email"
               editable={!isLoading}
             />
             <TextInput
               style={styles.input}
-              onChange={(password) => setPassword(password)}
+              onChangeText={(text) => setPassword(text)}
               value={password}
               placeholder="password"
               secureTextEntry={isSecure}
@@ -70,11 +70,14 @@ const SignInScreen = ({ navigation, setToken }) => {
               }
               setIsLoading(true);
               try {
+                console.log(`hello ${email}, ${password} blablbalbal`);
                 const response = await axios.post(`${ApiUrl}/user/log_in`, {
                   email,
                   password,
                 });
+                console.log("it's me");
                 if (response.status === 201) {
+                  console.log("from the other side");
                   alert(
                     `You have been registered : ${JSON.stringify(
                       response.data
@@ -86,10 +89,13 @@ const SignInScreen = ({ navigation, setToken }) => {
                   const userToken = "secret-token";
                   setToken(userToken);
                 } else {
-                  console.log(error.response);
+                  console.log("from the other other side");
+                  console.log("error ===>", error.response);
                   throw new Error(`An error has occured`);
                 }
               } catch (error) {
+                console.log("or from here ==>", error.response);
+                console.log("or from here ==>", error.message);
                 alert("An error has occured");
                 setIsLoading(false);
               }
@@ -120,6 +126,7 @@ const styles = StyleSheet.create({
   loading: {
     flex: 1,
     justifyContent: "center",
+    marginTop: 120,
   },
   titleH1: {
     fontSize: 24,

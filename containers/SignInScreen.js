@@ -77,7 +77,7 @@ const SignInScreen = ({ navigation, setToken }) => {
                   setToken(userToken);
                 } else {
                   console.log(error.response);
-                  throw new Error(`An error has occured ${error.response}`);
+                  throw new Error(`An error has occured`);
                 }
               } catch (error) {
                 alert("An error has occured");

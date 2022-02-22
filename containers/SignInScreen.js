@@ -76,7 +76,8 @@ const SignInScreen = ({ navigation, setToken }) => {
                   const userToken = "secret-token";
                   setToken(userToken);
                 } else {
-                  throw new Error("An error has occured");
+                  console.log(error.response);
+                  throw new Error(`An error has occured ${error.response}`);
                 }
               } catch (error) {
                 alert("An error has occured");

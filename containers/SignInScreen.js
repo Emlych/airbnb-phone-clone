@@ -6,15 +6,18 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
+  TouchableHighlight,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
+import { Ionicons } from "@expo/vector-icons";
 
 const SignInScreen = ({ navigation, setToken }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(true);
+  const [isSecure, setIsSecure] = useState(true);
 
   const ApiUrl = "https://express-airbnb-api.herokuapp.com/";
   return (
@@ -39,9 +42,16 @@ const SignInScreen = ({ navigation, setToken }) => {
               onChange={(password) => setPassword(password)}
               value={password}
               placeholder="password"
-              secureTextEntry={true}
+              secureTextEntry={isSecure}
               editable={!isLoading}
             />
+            <TouchableHighlight>
+              <Ionicons
+                name="eye"
+                style={styles.eye}
+                onPress={() => setIsSecure(!isSecure)}
+              />
+            </TouchableHighlight>
           </View>
 
           {isValid ? (
@@ -126,6 +136,14 @@ const styles = StyleSheet.create({
     borderBottomColor: "#EB5A62",
     marginBottom: 40,
     paddingBottom: 10,
+    position: "relative",
+  },
+  eye: {
+    fontSize: 32,
+    color: "#EB5A62",
+    position: "absolute",
+    bottom: 40,
+    right: 0,
   },
   button: {
     borderRadius: 22,
